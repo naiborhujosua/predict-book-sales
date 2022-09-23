@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt 
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import KFold
-from xgboost import XGBRegressor
+from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.metrics import mean_squared_error
 from math import ceil
 import seaborn as sns
@@ -94,21 +94,36 @@ class TargetEncode(BaseEstimator, TransformerMixin):
 categories = ['country','store','product']
 te = TargetEncode(categories = categories)
 te.fit(X_train, y_train['num_sold'])
-final_train = te.transform(X_train)
-final_train.head()
-final_test = te.transform(X_test)
-features = [col for col in final_test.columns if col not in ["row_id","date","dayofyear","week","month","day"]]
-
-
-X_train = final_train[features]
-y_train =final_train["num_sold"]
-X_test = final_test[features]
+X_train = te.transform(X_train)
+X_test = te.transform(X_test)
+features = [col for col in X_test.columns if col not in ["row_id","date","dayofyear","week","month","day"]]
+X_train = X_train[features]
+y_train = X_train["num_sold"]
+X_test = X_test[features]
   
 
-  
 #################################
 ########## MODELLING ############
 #################################
+
+# Fit a model on the train section
+params = {'n_estimators':1000, 'max_depth' : 10,'learning_rate': 0.1,
+              'colsample_bytree':0.33185821632518536,'base_score': 0.25, 
+              'subsample':0.9, 'random_state':42, 'reg_alpha':25, 'booster':'gbtree',
+              'min_child_weight':3}
+regr = GradientBoostingRegressor(**params)
+regr.fit(X_train, y_train)
+
+# Report training set score
+train_score = regr.score(X_train, y_train) * 100
+# Report test set score
+test_score = regr.score(X_test, y_test) * 100
+
+# Write scores to a file
+with open("metrics.txt", 'w') as outfile:
+        outfile.write("Training variance explained: %2.1f%%\n" % train_score)
+        outfile.write("Test variance explained: %2.1f%%\n" % test_score)
+
 
 # Write scores to a file
 with open("metrics.txt", 'w') as outfile:
