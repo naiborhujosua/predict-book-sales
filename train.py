@@ -129,7 +129,7 @@ with open("metrics.txt", 'w') as outfile:
 ##### PLOT FEATURE IMPORTANCE ############
 ##########################################
 # Calculate feature importance in random forest
-importances = xgb_model.feature_importances_
+importances = regr.feature_importances_
 labels = df.columns
 feature_df = pd.DataFrame(list(zip(labels, importances)), columns = ["feature","importance"])
 feature_df = feature_df.sort_values(by='importance', ascending=False,)
