@@ -97,7 +97,6 @@ X_train = te.transform(X_train)
 X_test = te.transform(X_test)
 features = [col for col in X_test.columns if col not in ["row_id","date","dayofyear","week","month","day"]]
 X_train = X_train[features]
-y_train = X_train["num_sold"]
 X_test = X_test[features]
   
 
