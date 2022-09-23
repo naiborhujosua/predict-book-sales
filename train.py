@@ -124,11 +124,6 @@ with open("metrics.txt", 'w') as outfile:
         outfile.write("Test variance explained: %2.1f%%\n" % test_score)
 
 
-# Write scores to a file
-with open("metrics.txt", 'w') as outfile:
-        outfile.write("Overall RMSE: %2.1f%%\n" % total_mean_RMSE)
-        outfile.write("Overall SMAPE: %2.1f%%\n" % total_mean_SMAPE)
-
 
 ##########################################
 ##### PLOT FEATURE IMPORTANCE ############
