@@ -92,7 +92,7 @@ class TargetEncode(BaseEstimator, TransformerMixin):
       
 categories = ['country','store','product']
 te = TargetEncode(categories = categories)
-te.fit(X_train, y_train['num_sold'])
+te.fit(X_train, y_train)
 X_train = te.transform(X_train)
 X_test = te.transform(X_test)
 features = [col for col in X_test.columns if col not in ["row_id","date","dayofyear","week","month","day"]]
