@@ -16,7 +16,8 @@ warnings.simplefilter(action='ignore', category=Warning)
 ################################
 
 # Load in the data
-df = pd.read_csv("predicting_num_sold.csv")
+df = pd.read_csv("predict_book_sales.csv") #for train and validation
+#df_test = pd.read_csv("predict_book_sales_test.csv") # for testing purposes
 
 # Split into train and test sections
 y = df.pop("num_sold")
@@ -95,9 +96,7 @@ te = TargetEncode(categories = categories)
 te.fit(X_train, y_train)
 X_train = te.transform(X_train)
 X_test = te.transform(X_test)
-features = [col for col in X_test.columns if col not in ["row_id","date","dayofyear","week","month","day"]]
-X_train = X_train[features]
-X_test = X_test[features]
+
   
 
 #################################
@@ -117,6 +116,7 @@ regr.fit(X_train, y_train)
 train_score = regr.score(X_train, y_train) * 100
 # Report test set score
 test_score = regr.score(X_test, y_test) * 100
+
 
 # Write scores to a file
 with open("metrics.txt", 'w') as outfile:
