@@ -106,14 +106,9 @@ X_test = X_test[features]
 
 # Fit a model on the train section
 params = {'n_estimators':1000, 
-          'max_depth' : 10,
+          'max_depth' : 7,
           'learning_rate': 0.1,
-          'base_score': 0.25, 
-          'subsample':0.9, 
-          'random_state':42, 
-          'reg_alpha':25, 
-          'booster':'gbtree',
-          'min_child_weight':3}
+          'random_state':42}
 
 regr = GradientBoostingRegressor(**params)
 regr.fit(X_train, y_train)
