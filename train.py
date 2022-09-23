@@ -105,10 +105,16 @@ X_test = X_test[features]
 #################################
 
 # Fit a model on the train section
-params = {'n_estimators':1000, 'max_depth' : 10,'learning_rate': 0.1,
-              'colsample_bytree':0.33185821632518536,'base_score': 0.25, 
-              'subsample':0.9, 'random_state':42, 'reg_alpha':25, 'booster':'gbtree',
-              'min_child_weight':3}
+params = {'n_estimators':1000, 
+          'max_depth' : 10,
+          'learning_rate': 0.1,
+          'base_score': 0.25, 
+          'subsample':0.9, 
+          'random_state':42, 
+          'reg_alpha':25, 
+          'booster':'gbtree',
+          'min_child_weight':3}
+
 regr = GradientBoostingRegressor(**params)
 regr.fit(X_train, y_train)
 
